@@ -3,12 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve:app": "vue-cli-service serve",
+    "serve:lambda": "netlify-lambda serve src/lambda",
+    "build:app": "vue-cli-service build",
+    "build:lambda": "netlify-lambda build src/lambda",
+    "serve": "npm-run-all -p serve:**",
+    "build": "npm-run-all -p build:**",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^2.6.6"
+    "isomorphic-fetch": "^2.2.1",
+    "vue": "^2.6.10",
+    "vue-responsive-components": "^0.2.3",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
@@ -17,6 +25,9 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "netlify-lambda": "^1.4.3",
+    "npm-run-all": "^4.1.5",
+    "run-p": "^0.0.0",
     "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {
