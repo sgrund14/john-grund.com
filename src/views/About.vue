@@ -1,28 +1,33 @@
 <template>
-  <section v-if="content">
+  <section v-if="contentLoaded">
     <div class="blurb-container" v-html="blurb" />
     <img :src="image" alt="" loop="infinite">
   </section>
+  <Loading v-else/>
 </template>
 
 <script>
-
+import Loading from '../components/Loading';
 import { mixin } from '../stores';
 
 export default {
-  name: 'Home',
+  name: 'About',
+  mixins: [mixin],
+  components: {
+    Loading
+  },
   mounted () {
     this.$store.dispatch('fetchPage', '/about')
   },
   computed: {
     blurb() {
-      return this.$store.state.content['/about'].blurb;
+      return this.page.blurb;
     },
     image() {
-      return this.$store.state.content['/about'].gif;
+      return this.page.gif;
     },
-    content() {
-      return !!this.$store.state.content['/about'];
+    contentLoaded() {
+      return !!this.page;
     }
   }
 }

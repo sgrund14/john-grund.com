@@ -44,6 +44,12 @@ html {
   font-feature-settings:"kern" 1;
   font-kerning: normal;
   background-color: var(--white);
+  height: 100%;
+  width: 100%;
+}
+body {
+  height: 100%;
+  width: 100%;
 }
 *, *:before, *:after {
   box-sizing: border-box;
@@ -53,9 +59,14 @@ html {
 main {
   font-family: 'akzidenz grotesk roman';
   font-size: 1rem;
+  height: 100%;
+  width: 100%;
 }
 .content {
   padding: 0 1rem;
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 @font-face {
   font-family: 'akzidenz grotesk roman';

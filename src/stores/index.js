@@ -16,7 +16,8 @@ const store = new Vuex.Store({
           const current = state.content[page] || {};
           const data = {
             ...current,
-            ...payload[page]
+            ...payload[page],
+            _loaded: current._loaded || payload[page]._loaded
           }
           Vue.set(state.content, page, data);
         });
@@ -38,7 +39,10 @@ const store = new Vuex.Store({
 export const mixin = {
   computed: {
     page() {
-        return this.$store.state.content[this.$route.path]
+        const pageMap = {
+          '/' : '/about'
+        };
+        return this.$store.state.content[pageMap[this.$route.path] || this.$route.path]
     },
   },
 }

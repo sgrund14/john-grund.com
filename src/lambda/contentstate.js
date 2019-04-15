@@ -43,6 +43,7 @@ function transformToContentState(res, url) {
     // }
     if (res.length === 1) {
         data[url] = {
+            _loaded: true,
             name: res[0].slug,
             url,
             ...res[0].acf
@@ -69,6 +70,7 @@ function transformToContentState(res, url) {
             const entryUrl = `${url}/${slug}`;
             data[url].pages.push(entryUrl);
             data[entryUrl] = {
+                _loaded: true,
                 slug,
                 url: entryUrl,
                 ...acf
