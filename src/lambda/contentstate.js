@@ -27,13 +27,13 @@ function generateUrl(url) {
 
 /**
  * transform data to fit the content-state specification
- * if I was a PHP/WP wiz I could do this in WP but i'm not so OH WELL
+ * if I was a PHP/WP wiz I could do this in WP but i'm as it is i'm a javascript homer
  * shouts to jon-kyle mohr https://www.jon-kyle.com/entries/2019-03-21-simple-ish-sites#2019-03-21-simple-ish-sites-fn1
  * and Folder Studios for the inspiration (they didn't write a post about it but I see them using it in their sites)
  * @param {Array[Object]} res response object
  * @param {String} url requested url
  */
-function parseFields(res, url) {
+function transformToContentState(res, url) {
     let data = {};
     // page with no subpages has shape:
     // {
@@ -42,7 +42,11 @@ function parseFields(res, url) {
     //     }
     // }
     if (res.length === 1) {
-        data[url] = res[0].acf;
+        data[url] = {
+            name: res[0].slug,
+            url,
+            ...res[0].acf
+        };
     }
     // page with subpages has shape
     // {
@@ -61,9 +65,14 @@ function parseFields(res, url) {
     // }
     else {
         data[url] = { pages: [] }
-        res.forEach(entry => {
-            data[url].pages.push(`${url}/${entry.slug}`);
-            data[`${url}/${entry.slug}`] = entry.acf;
+        res.forEach(({ slug, acf }) => {
+            const entryUrl = `${url}/${slug}`;
+            data[url].pages.push(entryUrl);
+            data[entryUrl] = {
+                slug,
+                url: entryUrl,
+                ...acf
+            };
         });
     }
     return data;
@@ -73,25 +82,25 @@ function removeTrailingSlash(url) {
     return url.replace(/\/$/, "");
 }
 
-export async function handler(event, context) {
+export function handler(event, context, callback) {
     const { url } = event.queryStringParameters;
     const formattedUrl = removeTrailingSlash(url);
-    return fetch(generateUrl(formattedUrl))
+    fetch(generateUrl(formattedUrl))
         .then(res => res.json())
-        .then(res => parseFields(res, formattedUrl))
+        .then(res => transformToContentState(res, formattedUrl))
         .then(res => {
-            return {
+            callback(null, {
                 statusCode: 200,
                 contentType: 'json',
                 headers: { 'content-type': 'application/json; charset=utf-8' },
                 body: JSON.stringify(res)
-            };
+            });
         }).catch(e => {
-            return {
+            callback(null, {
                 statusCode: 400,
                 contentType: 'json',
                 headers: { 'content-type': 'application/json; charset=utf-8' },
                 body: JSON.stringify({ message: 'Not found' })
-            };
+            });
         });
 }

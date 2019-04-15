@@ -30,7 +30,7 @@ export default {
 
 :root {
   --blue: #0645ad;
-  --white: #fcfefc;
+  --white: #fff;
 }
 
 html {
@@ -52,25 +52,18 @@ html {
 }
 main {
   font-family: 'akzidenz grotesk roman';
-  max-width: 1000px;
   font-size: 1rem;
-  margin: 0 auto;
 }
-@font-face {
-  font-family: 'akzidenz grotesk black';
-  src: url('assets/fonts/akzidenz-grotesk-black.woff2') format('woff2'), url('assets/fonts/akzidenz-grotesk-black.woff') format('woff');
-}
-@font-face {
-  font-family: 'akzidenz grotesk bold';
-  src: url('assets/fonts/akzidenz-grotesk-bold.woff2') format('woff2'), url('assets/fonts/akzidenz-grotesk-bold.woff') format('woff');
-}
-@font-face {
-  font-family: 'akzidenz grotesk light';
-  src: url('assets/fonts/akzidenz-grotesk-light.woff2') format('woff2'), url('assets/fonts/akzidenz-grotesk-light.woff') format('woff');
+.content {
+  padding: 0 1rem;
 }
 @font-face {
   font-family: 'akzidenz grotesk roman';
   src: url('assets/fonts/akzidenz-grotesk-roman.woff2') format('woff2'), url('assets/fonts/akzidenz-grotesk-roman.woff') format('woff');
+}
+@font-face {
+  font-family: 'untitled serif';
+  src: url('assets/fonts/UntitledSerifWeb-Regular.woff2') format('woff2')
 }
 button {
     border: none;

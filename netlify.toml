@@ -1,7 +1,7 @@
 [build]
-  Command = "npm run build"
-  Functions = "lambda"
-  Publish = "dist"
+  command = "yarn build"
+  functions = "lambda"
+  publish = "dist"
 
 [[redirects]]
   from = "/*"

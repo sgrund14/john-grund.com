@@ -1,21 +1,23 @@
 <template>
   <header>
     <h4>John Grund</h4>
-    <div>
-      <router-link to="/">/about</router-link><br>
-      <router-link to="/comics">/comics</router-link>
-    </div>
-    <div>
-      <router-link to="/illustrations">/illustrations</router-link><br>
-      <router-link to="/storyboarding">/storyboarding</router-link>
-    </div>
-    <div>
-      <router-link to="/misc">/misc</router-link><br>
-      <router-link to="/contact">/contact</router-link>
-    </div>
-    <div>
+    <nav>
+      <div>
+        <router-link to="/">/about</router-link><br>
+        <router-link to="/comics">/comics</router-link>
+      </div>
+      <div>
+        <router-link to="/illustrations">/illustrations</router-link><br>
+        <router-link to="/storyboarding">/storyboarding</router-link>
+      </div>
+      <div>
+        <router-link to="/misc">/misc</router-link><br>
+        <router-link to="/contact">/contact</router-link>
+      </div>
+    </nav>
+    <div class="followWrapper">
       <span class="follow" :class="{ showSocial }" @click="toggleSocial">Follow Me</span>
-      <div v-if="showSocial" class="socialLinks">
+      <div :class="['socialLinks', { hideLinks: !showSocial }]">
         <a target="__blank" href="https://www.instagram.com/john__grund/">instagram,</a>
         <a target="__blank" href="http://jgrund17.tumblr.com/">tumblr,</a>
         <a target="__blank" href="https://soundcloud.com/jgrund-19829311">soundcloud</a>
@@ -43,27 +45,35 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 header {
-  display: grid;
-  grid-template-columns: 25% 1fr 1.3fr 1fr 25%;
-  grid-column-gap: 1rem;
-  padding: .75rem;
-  font-size: .75rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin: auto;
+}
+nav {
+  display: flex;
+}
+nav > div {
+  padding: 0 1rem;
 }
 h4 {
   margin: 0;
   font-weight: normal;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 a {
   text-decoration: none;
   color: #000;
   position: relative;
 }
+.hideLinks {
+  visibility: hidden;
+}
 .socialLinks {
   display: flex;
-  font-size: .75rem;
 }
 .socialLinks > a {
   margin-right: .1rem;
@@ -81,7 +91,10 @@ a {
   content: "~";
   position: absolute;
   left: -10px;
-  top: -1px;
+  top: -2px;
+}
+.followWrapper {
+  text-align: right;
 }
 .follow {
   user-select: none;
