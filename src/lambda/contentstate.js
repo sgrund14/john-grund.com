@@ -65,7 +65,7 @@ function transformToContentState(res, url) {
     //     }
     // }
     else {
-        data[url] = { pages: [] }
+        data[url] = { _loaded: true, pages: [] }
         res.forEach(({ slug, acf }) => {
             const entryUrl = `${url}/${slug}`;
             data[url].pages.push(entryUrl);

@@ -3,7 +3,7 @@
     <h4>John Grund</h4>
     <nav>
       <div>
-        <router-link to="/">/about</router-link><br>
+        <router-link to="/" exact>/about</router-link><br>
         <router-link to="/comics">/comics</router-link>
       </div>
       <div>
@@ -16,7 +16,7 @@
       </div>
     </nav>
     <div class="followWrapper">
-      <span class="follow" :class="{ showSocial }" @click="toggleSocial">Follow Me</span>
+      <span class="follow" :class="{ showSocial }" @click="toggleSocial">Follow</span>
       <div :class="['socialLinks', { hideLinks: !showSocial }]">
         <a target="__blank" href="https://www.instagram.com/john__grund/">instagram,</a>
         <a target="__blank" href="http://jgrund17.tumblr.com/">tumblr,</a>
@@ -38,16 +38,17 @@ export default {
     toggleSocial() {
       this.showSocial = !this.showSocial;
     },
-  }
+  },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 header {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  padding: 1rem 0;
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -63,6 +64,7 @@ h4 {
   margin: 0;
   font-weight: normal;
   font-size: 2rem;
+  min-width: 220px;
 }
 a {
   text-decoration: none;
@@ -74,6 +76,7 @@ a {
 }
 .socialLinks {
   display: flex;
+  justify-content: flex-end;
 }
 .socialLinks > a {
   margin-right: .1rem;
@@ -81,13 +84,10 @@ a {
 .follow:hover, a:hover {
   color: var(--blue)
 }
-.router-link-exact-active {
+.router-link-active {
   color: var(--blue)
 }
-.router-link-exact-active:hover {
-  cursor: default;
-}
-.router-link-exact-active:before {
+.router-link-active:before {
   content: "~";
   position: absolute;
   left: -10px;
@@ -104,11 +104,12 @@ a {
 }
 .follow:after {
   display: inline-block;
-  content: "↓";
+  content: "⇧";
   margin-left: .25rem;
+  transform: rotate(180deg) translateY(1px);
 }
 .showSocial:after {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 @media (max-width: 1024px) {
   

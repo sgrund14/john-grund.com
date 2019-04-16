@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main :class="{ isLoading }">
     <MobileHeader v-if="el.is.mobile" />
     <Header v-else />
     <div class="content">
@@ -17,11 +17,16 @@ export default {
   name: 'app',
   mixins: [ResponsiveMixin],
   breakpoints: {
-    mobile: el => el.width < 900
+    mobile: el => el.width < (900 - 64)
   },
   components: {
     Header,
     MobileHeader
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    }
   }
 }
 </script>
@@ -31,6 +36,8 @@ export default {
 :root {
   --blue: #0645ad;
   --white: #fff;
+  --ff-sans: 'akzidenz grotesk roman', Arial, sans-serif;
+  --ff-serif: 'Copernicus Book', Georgia, 'Times New Roman', Times, serif;
 }
 
 html {
@@ -44,12 +51,6 @@ html {
   font-feature-settings:"kern" 1;
   font-kerning: normal;
   background-color: var(--white);
-  height: 100%;
-  width: 100%;
-}
-body {
-  height: 100%;
-  width: 100%;
 }
 *, *:before, *:after {
   box-sizing: border-box;
@@ -57,16 +58,16 @@ body {
   padding: 0;
 }
 main {
-  font-family: 'akzidenz grotesk roman';
+  font-family: var(--ff-sans);
   font-size: 1rem;
-  height: 100%;
-  width: 100%;
+  padding: 0 2rem;
+  min-height: 100vh;
 }
-.content {
-  padding: 0 1rem;
-  position: relative;
-  height: 100%;
-  width: 100%;
+.isLoading {
+  cursor: progress;
+}
+.isLoading a:hover {
+  cursor: progress
 }
 @font-face {
   font-family: 'akzidenz grotesk roman';
@@ -76,6 +77,23 @@ main {
   font-family: 'untitled serif';
   src: url('assets/fonts/UntitledSerifWeb-Regular.woff2') format('woff2')
 }
+@font-face {
+    font-family: 'Copernicus Book';
+    src: url('assets/fonts/Copernicus-Book.woff2') format('woff2'),
+        url('assets/fonts/Copernicus-Book.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Copernicus Book Italic';
+    src: url('assets/fonts/Copernicus-BookItalic.woff2') format('woff2'),
+        url('assets/fonts/Copernicus-BookItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+
 button {
     border: none;
     margin: 0;

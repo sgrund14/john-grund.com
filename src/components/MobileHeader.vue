@@ -54,7 +54,7 @@ export default {
 <style scoped>
 header {
   display: grid;
-  padding: .75rem 1.5rem;
+  padding: .75rem 0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -86,16 +86,6 @@ a {
   color: #000;
   position: relative;
 }
-.socialLinks {
-  display: flex;
-  font-size: .75rem;
-}
-.socialLinks > a {
-  margin-right: .1rem;
-}
-.follow:hover, a:hover {
-  color: var(--blue)
-}
 .router-link-exact-active {
   color: var(--blue)
 }
@@ -107,26 +97,5 @@ a {
   position: absolute;
   left: -15px;
   top: -1px;
-}
-.follow {
-  user-select: none;
-}
-.follow:hover {
-  cursor: pointer;
-}
-.follow:after {
-  display: inline-block;
-  content: "↓";
-  margin-left: .25rem;
-}
-.showSocial:after {
-  transform: rotate(180deg);
-}
-@media (max-width: 1024px) {
-  
-  .socialLinks {
-    flex-direction: column;
-    font-size: .75rem;
-  }
 }
 </style>

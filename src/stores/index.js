@@ -9,9 +9,10 @@ const store = new Vuex.Store({
       endpoint: '/.netlify/functions',
     },
     content: { },
+    isLoading: false,
   },
   mutations: {
-    setPage (state, payload = { }) {
+    setPage(state, payload = { }) {
         Object.keys(payload).forEach(page => {
           const current = state.content[page] || {};
           const data = {
@@ -22,16 +23,26 @@ const store = new Vuex.Store({
           Vue.set(state.content, page, data);
         });
     },
+    setIsLoading(state, isLoading) {
+      state.isLoading = isLoading;
+    }
   },
   actions: {
-    fetchPage ({ commit, state }, url = '') {
+    fetchPage({ commit, state }, url = '') {
       // skip redundant fetches
       if (state.content[url] && state.content[url]._loaded) return
       // hit the api
+      commit('setIsLoading', true);
       return fetch(`${state.api.endpoint}/contentstate?url=${url}`)
         .then(response => response.json())
-        .then(data => commit('setPage', data))
-        .catch(err => console.warn(err))
+        .then(data => {
+          commit('setPage', data);
+          commit('setIsLoading', false);
+        })
+        .catch(err => {
+          console.warn(err);
+          commit('setIsLoading', false);
+        })
     },
   },
 });

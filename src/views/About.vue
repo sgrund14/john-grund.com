@@ -1,4 +1,4 @@
-<template>
+<template class="pageWrapper">
   <section v-if="contentLoaded">
     <div class="blurb-container" v-html="blurb" />
     <img :src="image" alt="" loop="infinite">
@@ -8,7 +8,7 @@
 
 <script>
 import Loading from '../components/Loading';
-import { mixin } from '../stores';
+import store, { mixin } from '../stores';
 
 export default {
   name: 'About',
@@ -16,8 +16,17 @@ export default {
   components: {
     Loading
   },
-  mounted () {
-    this.$store.dispatch('fetchPage', '/about')
+  beforeRouteEnter (to, from, next) {
+    if (!from.name) {
+      next();
+    } else {
+      store.dispatch('fetchPage', '/about').then(next)
+    }
+  },
+  mounted() {
+    if (!this.contentLoaded) {
+      this.$store.dispatch('fetchPage', '/about');
+    }
   },
   computed: {
     blurb() {
@@ -36,7 +45,7 @@ export default {
 <style scoped>
 section {
   display: grid;
-  grid-template-columns: 1.5fr 4fr;
+  grid-template-columns: 270px 1fr;
 }
 img {
   height: calc(100vh - 70px - 1rem);
@@ -49,8 +58,9 @@ img {
 }
 .blurb-container >>> p {
   padding: .75rem 0;
-  font-size: 1rem;
-  font-family: 'untitled serif', Georgia, 'Times New Roman', Times, serif;
+  font-size: .75rem;
+  font-family: var(--ff-serif);
+  line-height: 1.5rem;
 }
 .blurb-container >>> a {
   color: var(--blue);
@@ -59,9 +69,6 @@ img {
   color: var(--blue);
 }
 @media (max-width: 1024px) {
-  section {
-    grid-template-columns: 1fr 2fr;
-  }
   img {
     width: 100%;
     height: unset;
