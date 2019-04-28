@@ -32,11 +32,34 @@ export default {
 </script>
 
 <style>
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
 
 :root {
   --blue: #0645ad;
   --white: #fff;
-  --ff-sans: 'akzidenz grotesk roman', Arial, sans-serif;
+  --lightgrey: #f1f1f1;
+  --ff-sans: 'akzidenz grotesk', Arial, sans-serif;
   --ff-serif: 'Copernicus Book', Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -70,8 +93,14 @@ main {
   cursor: progress
 }
 @font-face {
-  font-family: 'akzidenz grotesk roman';
-  src: url('assets/fonts/akzidenz-grotesk-roman.woff2') format('woff2'), url('assets/fonts/akzidenz-grotesk-roman.woff') format('woff');
+  font-family: 'akzidenz grotesk';
+  font-weight: normal;
+  src: url('assets/fonts/mystery1.woff') format('woff')
+}
+@font-face {
+  font-family: 'akzidenz grotesk light';
+  font-weight: lighter;
+  src: url('assets/fonts/mystery2.woff2') format('woff2')
 }
 @font-face {
   font-family: 'untitled serif';
@@ -86,7 +115,7 @@ main {
 }
 
 @font-face {
-    font-family: 'Copernicus Book Italic';
+    font-family: 'Copernicus Book';
     src: url('assets/fonts/Copernicus-BookItalic.woff2') format('woff2'),
         url('assets/fonts/Copernicus-BookItalic.woff') format('woff');
     font-weight: normal;

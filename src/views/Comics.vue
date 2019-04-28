@@ -1,12 +1,12 @@
 <template>
-    <section v-if="isContentLoaded">
+    <section v-if="isContentLoaded" v-lazy-container="{ selector: 'img' }">
         <router-link
             v-for="comic in comics"
             :key="comic.slug"
             :to="comic.link"
         >
             <img
-                :src="comic.image"
+                :data-src="comic.src"
                 :alt="comic.description"
             >
         </router-link>
@@ -40,7 +40,7 @@ export default {
             return this.page.pages.map(page => {
                 const content = this.$store.state.content[page];
                 return {
-                    image: content.featured_image,
+                    src: content.featured_image.url,
                     link: `/comics/${content.slug}`,
                     slug: content.slug,
                     description: content.decription
@@ -66,17 +66,28 @@ section {
     grid-gap: 1rem;
     padding: 1rem 0;
 }
+a {
+    display: flex;
+    align-items: center;
+}
 img {
     width: 100%;
-    height: 100%;
+    height: calc((25vw - 1rem)/2);
     padding: .25rem;
+}
+img[lazy="loading"] {
+    background-color: var(--lightgrey);
 }
 a:hover {
     outline: 1px solid var(--blue);
 }
 @media (max-width: 900px) {
-  section {
-    grid-template-columns: 1fr 1fr;
+    section {
+        grid-template-columns: 1fr 1fr;
+        grid-gap: .5rem;
+    }
+    img {
+        height: calc((50vw - 1rem) / 2)
     }
 }
 </style>

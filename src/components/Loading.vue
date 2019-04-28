@@ -1,5 +1,5 @@
 <template>
-  <div>LOADING</div>
+  <div/>
 </template>
 
 <script>
@@ -30,6 +30,7 @@ div {
 }
 div:after {
     content: '.';
+    font-size: 3rem;
     animation: loading 2s linear infinite;
 }
 </style>

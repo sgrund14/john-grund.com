@@ -5,9 +5,10 @@
         <img
             v-for="page in pages"
             :key="page.id"
-            :src="page.url"
+            v-lazy="page.url"
             :alt="page.alt"
         >
+        <router-link to="/comics">More Comics</router-link>
     </section> 
 </template>
 
@@ -54,13 +55,38 @@ export default {
 section {
     display: flex;
     flex-direction: column;
-    padding-top: 1rem;
     text-align: center;
 }
+a {
+    color: black;
+    padding: 1rem;
+    font-size: 2rem;
+}
+a:hover {
+    color: var(--blue);
+}
+h4 {
+    font-family: var(--ff-serif);
+    font-size: 2rem;
+    padding: 1rem 0;
+}
 p {
-    padding-bottom: 1rem;
+    font-family: var(--ff-serif);
+    padding-bottom: 2rem;
 }
 img {
     width: 100%;
+}
+img[lazy="loading"] {
+    background-color: var(--lightgrey);
+    height: 100vh;
+}
+@media (max-width: 900px) {
+    h4 {
+        font-size: 1.5rem;
+    }
+    a {
+        font-size: 1.5rem;
+    }
 }
 </style>

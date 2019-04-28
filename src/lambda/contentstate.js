@@ -102,7 +102,7 @@ export function handler(event, context, callback) {
                 statusCode: 400,
                 contentType: 'json',
                 headers: { 'content-type': 'application/json; charset=utf-8' },
-                body: JSON.stringify({ message: 'Not found' })
+                body: JSON.stringify({ message: 'Not found', e })
             });
         });
 }

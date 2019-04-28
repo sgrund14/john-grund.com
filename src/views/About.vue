@@ -1,7 +1,7 @@
 <template class="pageWrapper">
   <section v-if="contentLoaded">
     <div class="blurb-container" v-html="blurb" />
-    <img :src="image" alt="" loop="infinite">
+    <img v-lazy="image" alt="John Grund, At Work">
   </section>
   <Loading v-else/>
 </template>
@@ -43,11 +43,17 @@ export default {
 </script>
 
 <style scoped>
+
 section {
   display: grid;
   grid-template-columns: 270px 1fr;
 }
 img {
+  -webkit-animation: fadein .5s;
+  -moz-animation: fadein .5s;
+  -ms-animation: fadein .5s;
+  -o-animation: fadein .5s;
+  animation: fadein .5s;
   height: calc(100vh - 70px - 1rem);
   min-height: 500px;
 }
@@ -79,6 +85,10 @@ img {
   section {
     display: flex;
     flex-direction: column-reverse;
+  }
+  .blurb-container >>> p{
+    font-size: 1.1rem;
+    line-height: 1.75rem;
   }
 }
 </style>

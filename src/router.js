@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import About from './views/About.vue';
 import Comics from './views/Comics.vue';
 import Comic from './views/Comic.vue'
+import Illustrations from './views/Illustrations.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/comics/:slug',
       name: 'comic page',
       component: Comic
+    },
+    {
+      path: '/illustrations',
+      name: 'illustrations',
+      component: Illustrations
     }
   ],
 })

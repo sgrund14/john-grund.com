@@ -18,7 +18,7 @@
     </section>
     <nav v-if="isMenuOpen">
         <div>
-            <router-link to="/">/about</router-link><br>
+            <router-link to="/" exact>/about</router-link><br>
             <router-link to="/comics">/comics</router-link><br>
             <router-link to="/illustrations">/illustrations</router-link><br>
             <router-link to="/storyboarding">/storyboarding</router-link><br>
@@ -86,13 +86,13 @@ a {
   color: #000;
   position: relative;
 }
-.router-link-exact-active {
+.router-link-active {
   color: var(--blue)
 }
-.router-link-exact-active:hover {
+.router-link-active:hover {
   cursor: default;
 }
-.router-link-exact-active:before {
+.router-link-active:before {
   content: "~";
   position: absolute;
   left: -15px;
