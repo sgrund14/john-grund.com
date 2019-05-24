@@ -56,11 +56,12 @@ export default {
 }
 
 :root {
-  --blue: #0645ad;
+  --red: red;
+  --blue: blue;
   --white: #fff;
   --lightgrey: #f1f1f1;
-  --ff-sans: 'akzidenz grotesk', Arial, sans-serif;
-  --ff-serif: 'Copernicus Book', Georgia, 'Times New Roman', Times, serif;
+  --ff-sans: 'ShastonHi320', courier, sans-serif;
+  --ff-serif: 'code2001', Georgia, 'Times New Roman', Times, serif;
 }
 
 html {
@@ -122,6 +123,15 @@ main {
     font-style: italic;
 }
 
+@font-face {
+    font-family: 'ShastonHi320';
+    src: url('assets/fonts/ShastonHi320.woff2') format('woff2'),
+        url('assets/fonts/ShastonHi320.woff') format('woff');;
+}
+@font-face {
+    font-family: 'code2001';
+    src: url('assets/fonts/code2001.woff') format('woff');;
+}
 
 button {
     border: none;

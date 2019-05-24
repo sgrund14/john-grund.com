@@ -8,11 +8,12 @@ const store = new Vuex.Store({
     api: {
       endpoint: '/.netlify/functions',
     },
-    content: { },
+    content: {},
+    instagram: [],
     isLoading: false,
   },
   mutations: {
-    setPage(state, payload = { }) {
+    setPage(state, payload = {}) {
         Object.keys(payload).forEach(page => {
           const current = state.content[page] || {};
           const data = {
@@ -25,6 +26,9 @@ const store = new Vuex.Store({
     },
     setIsLoading(state, isLoading) {
       state.isLoading = isLoading;
+    },
+    setInstagram(state, payload = []) {
+      state.instagram = payload;
     }
   },
   actions: {
@@ -44,6 +48,16 @@ const store = new Vuex.Store({
           commit('setIsLoading', false);
         })
     },
+    fetchInstagram({ commit, state }) {
+      return fetch(`${state.api.endpoint}/instagram`)
+        .then(response => response.json())
+        .then(data => {
+          commit('setInstagram', data)
+        })
+        .catch(err => {
+          console.warn(err);
+        })
+    }
   },
 });
 

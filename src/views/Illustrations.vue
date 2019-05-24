@@ -6,6 +6,10 @@
             slot-scope="el"
             v-if="isContentLoaded"
         >
+            <ImageModal
+                :image="selectedImage"
+                :isOpen="!!selectedImage"
+            />
             <div
                 v-for="illustration in illustrations"
                 :key="illustration.title"
@@ -20,6 +24,7 @@
                     :alt="illustration.alt"
                     @mouseenter="() => toggleDetails(illustration.title)"
                     @mouseleave="() => toggleDetails('')"
+                    @click="() => setSelectedImage(illustration)"
                 >
                 <div v-if="shouldShowDetails(illustration.title)" class="details">
                     <h3>{{illustration.title}}</h3>
@@ -99,9 +104,21 @@ img:hover {
     cursor: zoom-in;
 }
 img {
+    /* -webkit-animation: fadein .5s;
+    -moz-animation: fadein .5s;
+    -ms-animation: fadein .5s;
+    -o-animation: fadein .5s;
+    animation: fadein .5s; */
     height: 100%;
     width: 100%;
 }
+/* img[lazy="loaded"] {
+     -webkit-animation: fadein .5s;
+    -moz-animation: fadein .5s;
+    -ms-animation: fadein .5s;
+    -o-animation: fadein .5s;
+    animation: fadein .5s;
+} */
 img[lazy="loading"] {
     background-color: var(--lightgrey);
 }

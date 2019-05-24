@@ -1,9 +1,7 @@
-<template class="pageWrapper">
+<template>
   <section v-if="contentLoaded">
-    <div class="blurb-container" v-html="blurb" />
-    <img v-lazy="image" alt="John Grund, At Work">
+    <img class="gif" v-lazy="image" alt="John Grund, At Work">
   </section>
-  <Loading v-else/>
 </template>
 
 <script>
@@ -20,7 +18,7 @@ export default {
     if (!from.name) {
       next();
     } else {
-      store.dispatch('fetchPage', '/about').then(next)
+        store.dispatch('fetchPage', '/about').then(next)
     }
   },
   mounted() {
@@ -35,6 +33,9 @@ export default {
     image() {
       return this.page.gif;
     },
+    instagram() {
+      return this.$store.state.instagram;
+    },
     contentLoaded() {
       return !!this.page;
     }
@@ -43,24 +44,28 @@ export default {
 </script>
 
 <style scoped>
-
-section {
-  display: grid;
-  grid-template-columns: 270px 1fr;
-}
-img {
+.gif {
   -webkit-animation: fadein .5s;
   -moz-animation: fadein .5s;
   -ms-animation: fadein .5s;
   -o-animation: fadein .5s;
   animation: fadein .5s;
-  height: calc(100vh - 70px - 1rem);
-  min-height: 500px;
+  position: absolute;
+  z-index: -300;
+  bottom: 1rem;
+  right: 1rem;
+  width: 60%;
 }
 .blurb-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  -webkit-animation: fadein .5s;
+  -moz-animation: fadein .5s;
+  -ms-animation: fadein .5s;
+  -o-animation: fadein .5s;
+  animation: fadein .5s;
+  margin-top: -1rem;
+  /* position: absolute; */
+  width: 270px;
+  z-index: 10;
 }
 .blurb-container >>> p {
   padding: .75rem 0;
@@ -74,6 +79,12 @@ img {
 .blurb-container >>> a:visited {
   color: var(--blue);
 }
+.ig-post {
+  width: 100%;
+}
+/* .left-col {
+  z-index: 10;
+} */
 @media (max-width: 1024px) {
   img {
     width: 100%;

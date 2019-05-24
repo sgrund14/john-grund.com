@@ -10,8 +10,10 @@
     "build:lambda": "netlify-lambda build src/lambda"
   },
   "dependencies": {
+    "instagram-web-api": "^2.0.0",
     "intersection-observer": "^0.6.0",
     "isomorphic-fetch": "^2.2.1",
+    "tough-cookie-filestore2": "^1.0.0",
     "vue": "^2.6.10",
     "vue-lazyload": "^1.2.6",
     "vue-responsive-components": "^0.2.3",
