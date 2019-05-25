@@ -80,7 +80,7 @@ export default {
       return this.page.gif;
     },
     instagram() {
-      return this.$store.state.instagram.slice(6);
+      return this.$store.state.instagram.reverse().slice(6);
     },
     contentLoaded() {
       return !!this.page;
