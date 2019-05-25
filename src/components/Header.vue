@@ -111,7 +111,9 @@ header {
 }
 .title {
   max-width: 55%;
-  line-height: 2rem;
+}
+.title > p {
+  line-height: 3rem;
 }
 .name {
   font-size: 2rem;
@@ -126,8 +128,9 @@ header {
 }
 nav {
   display: flex;
+  align-items: center;
   font-size: .75rem;
-  height: fit-content;
+  height: 3rem;
 }
 nav > div {
   padding: 0 1rem;
@@ -160,7 +163,7 @@ a {
   width: 455px;
   border-radius: .5rem;
   padding: .75rem;
-  background-color: rgba(189, 189, 255, 0.75);
+  background-color: rgba(181, 255, 44, 0.75);
 }
 .ig-container > a {
   display: flex;
@@ -176,7 +179,7 @@ a {
   border-radius: .25rem;
   transition: 0.3s transform ease;
 }
-.ig-container > a > img:hover {
+.ig-container > a:hover > img {
   transform: translateY(calc(-.75rem /2));
 }
 .socialContent {
@@ -191,6 +194,7 @@ a {
 }
 .socialLinks {
   display: flex;
+  margin: 1rem 0;
 }
 .socialLinks > a {
   margin-right: .1rem;
@@ -200,9 +204,6 @@ a {
   font-family: var(--ff-sans);
   font-size: 1rem;
   text-decoration: underline;
-}
-.follow:hover {
-  /* color: var(--blue); */
 }
 a:hover {
   color: var(--red)
@@ -232,9 +233,6 @@ a:hover {
   transform: rotate(90deg) translateY(1px);
   transition: .3s transform ease;
 }
-.follow:hover:after {
-  /* margin-left: .5rem; */
-}
 .showSocial:after {
   transform: rotate(-90deg);
 }
@@ -243,10 +241,6 @@ a:hover {
   bottom: 1rem;
 }
 @media (max-width: 1024px) {
-  
-  .socialLinks {
-    flex-direction: column;
-    font-size: .75rem;
-  }
+
 }
 </style>
