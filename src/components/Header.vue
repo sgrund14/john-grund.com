@@ -5,24 +5,31 @@
         <span class="name">John Grund</span>
         <span v-if="isAboutPage && contentLoaded" class="blurb" v-html="blurb" />
       </p>
-      <div class="followingWrapper">
-        <div :class="['socialContent', { hideSocial: !showSocial }]">
-          <!-- <div class="ig-container">
-            <img
-              v-for="post in instagram"
-              :key="post.shortcode"
-              v-lazy="post.url"
-              :alt="post.caption"
-              class="ig-post"
-            >
-          </div> -->
-          <div v-if="isAboutPage" class="socialLinks">
+      <div v-if="isAboutPage" class="followingWrapper">
+        <div :class="['socialContent', { hideSocial: !showSocial, socialPeeking: socialPeeking && !showSocial }]">
+          <div class="ig-container">
+            <a v-for="post in instagram" :key="post.shortcode" href="https://www.instagram.com/john__grund/" target="__blank">
+              <img
+                v-lazy="post.url"
+                :alt="post.caption"
+                class="ig-post"
+              >
+            </a>
+          </div>
+          <div class="socialLinks">
             <a target="__blank" href="https://www.instagram.com/john__grund/">instagram,</a>
             <a target="__blank" href="http://jgrund17.tumblr.com/">tumblr,</a>
             <a target="__blank" href="https://soundcloud.com/jgrund-19829311">soundcloud</a>
           </div>
         </div>
-        <span v-if="isAboutPage" class="follow" :class="{ showSocial }" @click="toggleSocial">You Can Follow Him on the Internet</span>
+        <span
+          class="follow"
+          :class="{ showSocial }"
+          @click="toggleSocial"
+          @mouseenter="() => togglePeeking(true)"
+          @mouseleave="() => togglePeeking(false)"
+        >
+          Follow Him on the Web</span>
       </div>
     </div>
     <nav>
@@ -50,14 +57,17 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      showSocial: false
+      showSocial: false,
+      socialPeeking: false
     }
   },
   methods: {
     toggleSocial() {
       this.showSocial = !this.showSocial;
-      console.log(this.blurb)
     },
+    togglePeeking(isPeeking) {
+      this.socialPeeking = isPeeking;
+    }
   },
   mounted() {
     this.$store.dispatch('fetchInstagram');
@@ -70,7 +80,7 @@ export default {
       return this.page.gif;
     },
     instagram() {
-      return this.$store.state.instagram;
+      return this.$store.state.instagram.slice(6);
     },
     contentLoaded() {
       return !!this.page;
@@ -146,12 +156,28 @@ a {
 .ig-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: .5rem;
-  width: 600px;
+  grid-gap: .75rem;
+  width: 455px;
+  border-radius: .5rem;
+  padding: .75rem;
+  background-color: rgba(189, 189, 255, 0.75);
 }
-.ig-container > img {
+.ig-container > a {
+  display: flex;
+  align-items: center;
+}
+.ig-container > a > img {
+  -webkit-animation: slideIn .5s;
+  -moz-animation: slideIn .5s;
+  -ms-animation: slideIn .5s;
+  -o-animation: slideIn .5s;
+  animation: slideIn .5s;
   width: 100%;
-
+  border-radius: .25rem;
+  transition: 0.3s transform ease;
+}
+.ig-container > a > img:hover {
+  transform: translateY(calc(-.75rem /2));
 }
 .socialContent {
   transform: translateX(0%);
@@ -159,6 +185,9 @@ a {
 }
 .hideSocial {
   transform: translateX(calc(-100% - 2rem));
+}
+.socialPeeking {
+  transform: translateX(-100%);
 }
 .socialLinks {
   display: flex;
@@ -204,7 +233,7 @@ a:hover {
   transition: .3s transform ease;
 }
 .follow:hover:after {
-  margin-left: .5rem;
+  /* margin-left: .5rem; */
 }
 .showSocial:after {
   transform: rotate(-90deg);

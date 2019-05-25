@@ -67,8 +67,14 @@ section {
     padding: 1rem 0;
 }
 a {
+    -webkit-animation: slideIn .5s;
+  -moz-animation: slideIn .5s;
+  -ms-animation: slideIn .5s;
+  -o-animation: slideIn .5s;
+  animation: slideIn .5s;
     display: flex;
     align-items: center;
+    transition: .3s transform ease;
 }
 img {
     width: 100%;
@@ -79,7 +85,8 @@ img[lazy="loading"] {
     background-color: var(--lightgrey);
 }
 a:hover {
-    outline: 1px solid var(--blue);
+    /* outline: 1px solid var(--blue); */
+    transform: translateY(-2.5%);
 }
 @media (max-width: 900px) {
     section {

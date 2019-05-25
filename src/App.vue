@@ -55,6 +55,59 @@ export default {
     to   { opacity: 1; }
 }
 
+@keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    to   {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+}
+@-moz-keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    to   {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+}
+
+@-webkit-keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    to   {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+}
+
+@-ms-keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    to   {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+}
+@-o-keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    to   {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+}
+
 :root {
   --red: red;
   --blue: blue;

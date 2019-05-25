@@ -111,6 +111,11 @@ img {
     animation: fadein .5s; */
     height: 100%;
     width: 100%;
+    -webkit-animation: slideIn .5s;
+  -moz-animation: slideIn .5s;
+  -ms-animation: slideIn .5s;
+  -o-animation: slideIn .5s;
+  animation: slideIn .5s;
 }
 /* img[lazy="loaded"] {
      -webkit-animation: fadein .5s;
