@@ -108,6 +108,50 @@ export default {
     }
 }
 
+
+@keyframes grow {
+    from {
+      max-height: 0;
+    }
+    to   {
+      max-height: 500px;
+    }
+}
+@-moz-keyframes grow {
+    from {
+      max-height: 0;
+    }
+    to   {
+      max-height: 500px;
+    }
+}
+
+@-webkit-keyframes grow {
+    from {
+      max-height: 0;
+    }
+    to   {
+      max-height: 500px;
+    }
+}
+
+@-ms-keyframes grow {
+    from {
+      max-height: 0;
+    }
+    to   {
+      max-height: 500px;
+    }
+}
+@-o-keyframes grow {
+    from {
+      max-height: 0;
+    }
+    to   {
+      max-height: 500px;
+    }
+}
+
 :root {
   --red: red;
   --blue: blue;

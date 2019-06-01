@@ -67,11 +67,6 @@ section {
     padding: 1rem 0;
 }
 a {
-    -webkit-animation: slideIn .5s;
-  -moz-animation: slideIn .5s;
-  -ms-animation: slideIn .5s;
-  -o-animation: slideIn .5s;
-  animation: slideIn .5s;
     display: flex;
     align-items: center;
     transition: .3s transform ease;
@@ -80,6 +75,13 @@ img {
     width: 100%;
     height: calc((25vw - 1rem)/2);
     padding: .25rem;
+}
+img[lazy="loaded"] {
+    -webkit-animation: slideIn .5s;
+  -moz-animation: slideIn .5s;
+  -ms-animation: slideIn .5s;
+  -o-animation: slideIn .5s;
+  animation: slideIn .5s;
 }
 img[lazy="loading"] {
     background-color: var(--lightgrey);

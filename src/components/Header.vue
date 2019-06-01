@@ -10,7 +10,7 @@
           <div class="ig-container">
             <a v-for="post in instagram" :key="post.shortcode" href="https://www.instagram.com/john__grund/" target="__blank">
               <img
-                v-lazy="post.url"
+                :src="post.url"
                 :alt="post.caption"
                 class="ig-post"
               >
@@ -181,6 +181,13 @@ a {
 }
 .ig-container > a:hover > img {
   transform: translateY(calc(-.75rem /2));
+}
+img[lazy="loaded"] {
+    -webkit-animation: slideIn .5s;
+  -moz-animation: slideIn .5s;
+  -ms-animation: slideIn .5s;
+  -o-animation: slideIn .5s;
+  animation: slideIn .5s;
 }
 .socialContent {
   transform: translateX(0%);

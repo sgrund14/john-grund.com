@@ -2,33 +2,46 @@
     <Responsive :breakpoints="{
         mobile: el => el.width <= 900 - 64
     }">
-        <section
-            slot-scope="el"
-            v-if="isContentLoaded"
-        >
-            <ImageModal
+        <section v-if="isContentLoaded">
+            <!-- <ImageModal
                 :image="selectedImage"
                 :isOpen="!!selectedImage"
-            />
+            /> -->
             <div
-                v-for="illustration in illustrations"
-                :key="illustration.title"
-                class="wrapper"
-                :style="{
-                    width: el.is.mobile ? illustration.mobileWidth : illustration.width,
-                    height: el.is.mobile ? illustration.mobileHeight : illustration.height
-                }"
+                v-for="(illustrationCol, index) in illustrations"
+                :key="`illustration-${index}`"
+                :id="`illustration-${index}`"
+                class="illustration-column"
             >
-                <img
-                    v-lazy="illustration.src"
-                    :alt="illustration.alt"
-                    @mouseenter="() => toggleDetails(illustration.title)"
-                    @mouseleave="() => toggleDetails('')"
-                    @click="() => setSelectedImage(illustration)"
+                <div
+                    v-for="illustration in illustrationCol"
+                    :key="illustration.title"
+                    class="wrapper"
+                    @mouseenter="() => toggleDetails(illustration, illustration.index)"
+                    @mouseleave="() => toggleDetails(illustration, -1)" 
                 >
-                <div v-if="shouldShowDetails(illustration.title)" class="details">
-                    <h3>{{illustration.title}}</h3>
-                    <p>{{illustration.details}}</p>
+                    <img
+                        v-lazy="illustration.src"
+                        :alt="illustration.alt"
+                    >
+                </div>
+            </div>
+            <div :class="['detailsWrapper', 'leftDetails', { showDetails: illustrationToShow.index % 3 === 0 }]">
+                <div class="illustrationDetails">
+                    <h3>{{illustrationToShow.left.title}}</h3>
+                    <p>{{illustrationToShow.left.details}}</p>
+                </div>
+            </div>
+            <div :class="['detailsWrapper', 'centerDetails', { showDetailsCenter: illustrationToShow.index % 3 === 1 }]">
+                <div class="illustrationDetails">
+                    <h3>{{illustrationToShow.center.title}}</h3>
+                    <p>{{illustrationToShow.center.details}}</p>
+                </div>
+            </div>
+            <div :class="['detailsWrapper', 'rightDetails', { showDetails: illustrationToShow.index % 3 === 2 }]">
+                <div class="illustrationDetails">
+                    <h3>{{illustrationToShow.right.title}}</h3>
+                    <p>{{illustrationToShow.right.details}}</p>
                 </div>
             </div>
         </section>
@@ -61,54 +74,81 @@ export default {
     },
     data() {
         return {  
-            titleToShow: ''
+            illustrationToShow: {
+                index: -1,
+                left: {},
+                center: {},
+                right: {}
+            }
         };
     },
     computed: {
         illustrations() {
-            return this.page.illustrations.map(illustration => ({
-                ...illustration,
-                src: illustration.image.url,
-                width: 'calc(33.33vw - 2rem)',
-                height: `calc((33.33vw - 2rem) / ${illustration.image.width / illustration.image.height})`,
-                mobileWidth: 'calc(50vw - 2rem)',
-                mobileHeight: `calc((50vw - 2rem) / ${illustration.image.width / illustration.image.height})`
-            }))
+            const illustrations = this.page.illustrations.reduce((acc, illustration, index) => {
+                const bucketIndex = index % 3;
+                const bucket = acc[bucketIndex];
+                acc[bucketIndex] = [...bucket, {
+                    ...illustration,
+                    index: bucketIndex,
+                    src: illustration.image.url,
+                }];
+                return acc;
+            }, [[],[], []]);
+            return illustrations;
         },
         isContentLoaded() {
             return !!this.page;
         },
+        hoveredIllustration() {
+            return this.illustrationToShow
+        }
     },
     methods: {
-        toggleDetails(titleToShow) {
-            this.titleToShow = titleToShow;
+        toggleDetails(illustration, index) {
+            if (index === -1) {
+                this.illustrationToShow.index = index;
+                return;
+            }
+            this.illustrationToShow = { ...this.illustrationToShow, [this.mapIndexToColumn(index)]: illustration, index };
         },
-        shouldShowDetails(title) {
-            return this.titleToShow && this.titleToShow === title
-        },
+        mapIndexToColumn(index) {
+            switch(index) {
+                case 0:
+                    return "left";
+                case 1:
+                    return "center";
+                case 2:
+                    return "right";
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
 section {
-   -webkit-column-count: 3;
-   -moz-column-count: 3;
-   column-count: 3;
-   -moz-column-gap: 1rem;
-   -webkit-column-gap: 1rem;
-   column-gap: 1rem;
+   display: flex;
+   justify-content: space-between;
+   position: relative;
 }
+.illustration-column {
+    width: calc(100vw/3 - 2rem);
+}
+/* .illustration-column:first-child > .wrapper {
+    padding-right: .5rem;
+}
+.illustration-column:nth-child(2) > .wrapper {
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
+.illustration-column:nth-child(3) > .wrapper {
+    padding-left: .5rem;
+} */
+
 img:hover {
-    opacity: .1;
     cursor: zoom-in;
 }
 img {
-    /* -webkit-animation: fadein .5s;
-    -moz-animation: fadein .5s;
-    -ms-animation: fadein .5s;
-    -o-animation: fadein .5s;
-    animation: fadein .5s; */
     height: 100%;
     width: 100%;
     -webkit-animation: slideIn .5s;
@@ -117,35 +157,68 @@ img {
   -o-animation: slideIn .5s;
   animation: slideIn .5s;
 }
-/* img[lazy="loaded"] {
-     -webkit-animation: fadein .5s;
-    -moz-animation: fadein .5s;
-    -ms-animation: fadein .5s;
-    -o-animation: fadein .5s;
-    animation: fadein .5s;
-} */
 img[lazy="loading"] {
     background-color: var(--lightgrey);
 }
 .wrapper {
     position: relative;
-    margin-bottom: 1rem;
-}
-.details {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
+    transition: .3s margin-bottom ease;
     width: 100%;
+    padding-bottom: 1rem;
+}
+.detailsWrapper {
+    position: fixed;
+    bottom: 1rem;
+    width: calc((100vw / 3) - 2rem);
+    transition: 0.3s transform ease, 0.3s opacity ease;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+}
+.illustrationDetails {
+    width: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
+    background-color: white;
+    color: black;
+    border-radius: .5rem;
+    border: 3px outset silver;
+    padding: 1rem 2rem;
+    line-height:1.25rem;
 }
-.details > h3 {
-    margin-bottom: 1rem;
+.leftDetails {
+    text-align: left;
+    left: 2rem;
+    transform: translateX(calc(-100% - 2rem));
+}
+.rightDetails {
+    text-align: right;
+    right: 2rem;
+    transform:  translateX(calc(100% + 2rem));
+}
+.centerDetails {
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%) translateY(calc(100% + 1rem + 1px));
+}
+.illustrationDetails > h3 {
+    margin-bottom: .5rem;
+    font-size: .75rem;
     text-transform: uppercase;
+}
+.illustrationDetails > p {
+      font-family: var(--ff-serif);
+      font-size: 1rem;
+      font-style: italic;
+  }
+.showDetails {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+}
+.showDetailsCenter {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 @media (max-width: 900px) {
   section {
@@ -157,7 +230,7 @@ img[lazy="loading"] {
       font-size: 1rem;
   }
   .details > p {
-      font-size: .75rem;
+      font-size: 1rem;
   }
 }
 
